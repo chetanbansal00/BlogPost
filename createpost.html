@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Blog Post</title>
+    <link rel="stylesheet" th:href="@{/css/createpost.css}" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h2>Create Blog Post</h2>
+    <form th:action="@{${post.id} != null ? '/updatePost' :'/savePost'}" th:object="${post}" method="POST" id="form1">
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{createdAt}"/>
+        <input type="hidden" th:field="*{publishedAt}"/>
+<!--        <input type="hidden" th:field="*{isPublished}"/>-->
+        <input type="text" th:field="*{title}" placeholder="Title" required />
+        <textarea th:field="*{excerpt}" placeholder="Excerpt" rows="3" required></textarea>
+        <textarea th:field="*{content}" placeholder="Content" rows="6" required></textarea>
+        <input type="text" th:field="*{author}" placeholder="Author" required />
+        <input type="text" name="tags" placeholder="Enter tags(Comma Separated)" th:value="${tags}"/>
+        <input type="submit" value="Submit" class="submit-btn" />
+    </form>
+    <div class="back-link">
+        <a th:href="@{/showPosts}">← Back to Posts</a>
+    </div>
+</div>
+</body>
+</html>

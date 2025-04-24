@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Full Post</title>
+    <link rel="stylesheet" th:href="@{/css/fullpost.css}" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <!-- Post Content -->
+    <div class="post">
+        <div id="tags" th:if="${post.postTags.size() != 0}">
+            Tags:
+            <div th:each="postTag: ${post.postTags}">
+                <span  th:text="${postTag.tag.name}"></span>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a th:href="@{'/updatePost/' + ${post.id}}" class="btn update-btn">Update</a>
+            <a th:href="@{'/deletePost/' + ${post.id}}" class="btn delete-btn">Delete</a>
+        </div>
+
+        <h1 class="title" th:text="${post.title}">Post Title</h1>
+
+        <div class="post-meta">
+            <p class="author"><strong>By:</strong> <span th:text="${post.author}">Author</span></p>
+            <p class="date"><strong>Published:</strong> <span th:text="${post.publishedAt}">Date</span></p>
+<!--            <p class="date"><strong>Created:</strong> <span th:text="${post.createdAt}">Date</span></p>-->
+<!--            <p class="date"><strong>Updated:</strong> <span th:text="${post.updatedAt}">Date</span></p>-->
+        </div>
+
+        <p class="excerpt" th:text="${post.excerpt}">Excerpt</p>
+        <hr />
+        <div class="content" th:text="${post.content}">Full content goes here...</div>
+
+
+    </div>
+
+    <div id="comment-section">
+        <div id="showcomments" th:each="commentt : ${allComments}">
+             <span th:text="${commentt.name}"></span>
+            <span th:text="${commentt.updatedAt}"></span>
+            <p th:text="${commentt.comment}"></p>
+
+            <a th:href="@{'/updateComment/' + ${commentt.id}}" >Update</a>
+            <a th:href="@{'/deleteComment/' + ${commentt.id}}" >Delete</a>
+        </div>
+    </div>
+    <!-- Comment Form -->
+    <div class="comment">
+        <h3 >Leave a Comment</h3>
+        <form th:object="${tempComment}"
+              th:action="${commentobj != null and commentobj.id != null ? '/updateComment/' + commentobj.id : '/' + post.id + '/saveComment'}"
+              method="POST"
+              class="comment-form">
+
+        <!--        <form th:action="@{'/' + ${post.id} +'/saveComment'}" th:object="${tempComment}" method="POST" class="comment-form">-->
+<!--            <input type="hidden" th:field="*{postId}" th:value="${post.id}" />-->
+            <input type="hidden" th:field="*{id}"/>
+            <div class="form-group">
+                <input type="text" th:field="*{name}" placeholder="Name" class="form-input" required />
+            </div>
+
+            <div class="form-group">
+                <input type="email" th:field="*{email}" placeholder="Email" class="form-input" required />
+            </div>
+
+            <div class="form-group">
+                <textarea th:field="*{comment}" placeholder="Your Comment" rows="4" class="form-textarea" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Submit" class="submit-btn" />
+            </div>
+        </form>
+
+        <div class="back-link">
+            <a th:href="@{/showPosts}">← Back to Posts</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

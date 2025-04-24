@@ -1,0 +1,140 @@
+<!--<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog Posts</title>
+    <link rel="stylesheet" th:href="@{/css/showpost.css}" />
+    <link href="css/showpost.css" rel="stylesheet">
+</head>
+<body>
+<div id="container">
+    <div class="top-bar">
+        <h1>All Blog Posts</h1>
+        <a class="create-btn" th:href="@{/createPost}">+ Create Post</a>
+    </div>
+
+&lt;!&ndash;    <div class="post-list" th:each="post : ${allposts}">&ndash;&gt;
+&lt;!&ndash;        <div class="post-card">&ndash;&gt;
+&lt;!&ndash;            <a th:href="@{'/fullpost/' + ${post.id}}" th:text="${post.title}">Title</a>&ndash;&gt;
+&lt;!&ndash;            <p class="excerpt" th:text="${post.excerpt}">Excerpt</p>&ndash;&gt;
+&lt;!&ndash;            <p class="author" th:text="'By ' + ${post.author}">Author</p>&ndash;&gt;
+&lt;!&ndash;            <p class="date" th:text="${post.publishedAt}">Date</p>&ndash;&gt;
+
+&lt;!&ndash;            <div id="tags" th:if="${post.postTags.size() != 0}">&ndash;&gt;
+&lt;!&ndash;                Tags:&ndash;&gt;
+&lt;!&ndash;                <div  th:each="postTag: ${post.postTags}">&ndash;&gt;
+&lt;!&ndash;                    <span  th:text="${postTag.tag.name}"></span>&ndash;&gt;
+&lt;!&ndash;                </div>&ndash;&gt;
+&lt;!&ndash;            </div>&ndash;&gt;
+
+
+&lt;!&ndash;        </div>&ndash;&gt;
+&lt;!&ndash;    </div>&ndash;&gt;
+
+    &lt;!&ndash; Display paginated posts &ndash;&gt;
+    <div class="post-list" th:each="post : ${postPage.content}">
+        <div class="post-card">
+            <a th:href="@{'/fullpost/' + ${post.id}}" th:text="${post.title}" style="font-weight: bold;">Title</a>
+            <p class="excerpt" th:text="${post.excerpt}">Excerpt</p>
+            <p class="author" th:text="'By ' + ${post.author}">Author</p>
+            <p class="date" th:text="${post.publishedAt}">Date</p>
+
+            <div id="tags" th:if="${post.postTags.size() != 0}">
+                Tags:
+                <div th:each="postTag: ${post.postTags}">
+                    <span th:text="${postTag.tag.name}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    &lt;!&ndash; Pagination controls &ndash;&gt;
+    <div class="pagination">
+        &lt;!&ndash; Previous Button &ndash;&gt;
+        <a th:if="${postPage.hasPrevious()}"
+           th:href="@{/showPosts(page=${postPage.number - 1}, size=${postPage.size})}"
+           class="pagination-btn previous">
+            Previous
+        </a>
+
+        &lt;!&ndash; Next Button &ndash;&gt;
+        <a th:if="${postPage.hasNext()}"
+           th:href="@{/showPosts(page=${postPage.number + 1}, size=${postPage.size})}"
+           class="pagination-btn next">
+            Next
+        </a>
+    </div>
+</div>
+</body>
+</html>-->
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog Posts</title>
+    <link rel="stylesheet" th:href="@{/css/showpost.css}" />
+    <link href="css/showpost.css" rel="stylesheet">
+</head>
+<body>
+<div id="container">
+
+    <!-- Top Bar Header -->
+    <div class="header">
+        <h1>My Blog Application</h1>
+        <a class="login" href="/login">Login</a>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <input type="search" placeholder="Search" />
+        <select>
+            <option>Filter</option>
+            <!-- Additional filter options -->
+        </select>
+        <select>
+            <option>Sort</option>
+            <!-- Additional sort options -->
+        </select>
+    </div>
+
+    <!-- Title bar and Create Post -->
+    <div class="top-bar">
+        <h1>All Blog Posts</h1>
+        <a class="create-btn" th:href="@{/createPost}">+ Create Post</a>
+    </div>
+
+    <!-- Blog posts grid -->
+    <div class="post-grid">
+        <div class="post-card" th:each="post : ${postPage.content}">
+            <a th:href="@{'/fullpost/' + ${post.id}}" th:text="${post.title}" id="post-title">Title</a>
+            <p class="author" th:text="${post.author + ', ' + post.publishedAt}">Author, Date</p>
+            <p class="excerpt" th:text="${post.excerpt}">Excerpt</p>
+
+            <div id="tags" th:if="${post.postTags.size() != 0}">
+                Tags:
+                <div th:each="postTag: ${post.postTags}">
+                    <span th:text="${postTag.tag.name}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination controls -->
+    <div class="pagination-arrows">
+        <a th:if="${postPage.hasPrevious()}"
+           th:href="@{/showPosts(page=${postPage.number - 1}, size=${postPage.size})}">
+            &lt; Previous
+        </a>
+        <a th:if="${postPage.hasNext()}"
+           th:href="@{/showPosts(page=${postPage.number + 1}, size=${postPage.size})}">
+            Next &gt;
+        </a>
+    </div>
+</div>
+</body>
+</html>
